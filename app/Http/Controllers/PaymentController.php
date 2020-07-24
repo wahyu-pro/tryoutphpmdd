@@ -63,65 +63,66 @@ class PaymentController extends Controller
 
 
         $paymentFind = Payment::find(6);
-        $item_list = array();
-        $amount = 0;
-        Config::$serverKey = 'SB-Mid-server-XNmbljytrWjbZS9Civ_JLQIh';
-        if (!isset(Config::$serverKey)) {
-            return "Please set your payment server key";
-        }
-        Config::$isSanitized = true;
+        // $item_list = array();
+        // $amount = 0;
+        // Config::$serverKey = 'SB-Mid-server-XNmbljytrWjbZS9Civ_JLQIh';
+        // if (!isset(Config::$serverKey)) {
+        //     return "Please set your payment server key";
+        // }
+        // Config::$isSanitized = true;
 
         // Enable 3D-Secure
-        Config::$is3ds = true;
+        // Config::$is3ds = true;
 
         $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
+        return $items;
         // return $items;
         // Required
-        $item_list[] = $items;
+        // $item_list[] = $items;
         // $item_list[] = [
         //     'id' => "111",
         //     'price' => 20000,
         //     'quantity' => 1,
         //     'name' => "Majohn"
         // ];
-        $transaction_details = array(
-            'order_id' => $paymentFind->order_id,
-            'gross_amount' => 0, // no decimal allowed for creditcard
-        );
-
-        // Optional
-        $item_details = $item_list;
-        // Optional
-        $order = Order::find($paymentFind->order_id);
-        $customer = Customer::find($order->user_id);
-        $customer_details = $customer;
-        // $customer_details = array(
-        //     'first_name'    => "Andri",
-        //     'last_name'     => "Litani",
-        //     'email'         => "andri@litani.com",
-        //     'phone_number'  => "081122334455"
+        // $transaction_details = array(
+        //     'order_id' => $paymentFind->order_id,
+        //     'gross_amount' => 0, // no decimal allowed for creditcard
         // );
 
-        // Optional, remove this to display all available payment methods
-        $enable_payments = array();
+        // // Optional
+        // $item_details = $item_list;
+        // // Optional
+        // $order = Order::find($paymentFind->order_id);
+        // $customer = Customer::find($order->user_id);
+        // $customer_details = $customer;
+        // // $customer_details = array(
+        // //     'first_name'    => "Andri",
+        // //     'last_name'     => "Litani",
+        // //     'email'         => "andri@litani.com",
+        // //     'phone_number'  => "081122334455"
+        // // );
 
-        // Fill transaction details
-        $transaction = array(
-            // 'enabled_payments' => $enable_payments,
-            'transaction_details' => $transaction_details,
-            'customer_details' => $customer_details,
-            'item_details' => $item_details,
-        );
-        // return $transaction;
-        try {
-            $snapToken = Snap::getSnapToken($transaction);
-            // return response()->json($snapToken);
-            return response()->json($snapToken);
-            // return ['code' => 1 , 'message' => 'success' , 'result' => $snapToken];
-        } catch (\Exception $e) {
-            dd($e);
-            return ['code' => 0, 'message' => 'failed'];
-        }
+        // // Optional, remove this to display all available payment methods
+        // $enable_payments = array();
+
+        // // Fill transaction details
+        // $transaction = array(
+        //     // 'enabled_payments' => $enable_payments,
+        //     'transaction_details' => $transaction_details,
+        //     'customer_details' => $customer_details,
+        //     'item_details' => $item_details,
+        // );
+        // // return $transaction;
+        // try {
+        //     $snapToken = Snap::getSnapToken($transaction);
+        //     // return response()->json($snapToken);
+        //     return response()->json($snapToken);
+        //     // return ['code' => 1 , 'message' => 'success' , 'result' => $snapToken];
+        // } catch (\Exception $e) {
+        //     dd($e);
+        //     return ['code' => 0, 'message' => 'failed'];
+        // }
     }
 
     // public function get_items($id)
