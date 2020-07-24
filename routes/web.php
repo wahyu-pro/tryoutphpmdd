@@ -41,6 +41,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     // end order
 
     // payment
+    $router->get('payment', 'PaymentController@index');
     $router->post('payment', 'PaymentController@create');
     $router->post('paymentmidtrans/push', 'PaymentController@getSnapToken');
 });
