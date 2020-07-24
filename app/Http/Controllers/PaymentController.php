@@ -78,26 +78,12 @@ class PaymentController extends Controller
         if(!$items){
             return "order not found";
         }
-        // $item_list = [];
-        $item_order = $items;
-        for($i=0; $i < count($item_order); $i++)
-        {
-            $item_list['id'] = $item_order[$i]['id'];
-            $item_list['price'] = $item_order[$i]['product']['price'];
-            $item_list['quantity'] = $item_order[$i]['quantity'];
-            $item_list['name'] = $item_order[$i]['product']['name'];
+        // return $paymentFind->order_id;
+        // return $items;
+        // Required
+        foreach($items as $key =>$value){
+            $item_list[][$key]= $value;
         }
-        // return $item_list;
-        // $item_new[] = [
-        //     'id' => "111",
-        //     'price' => 20000,
-        //     'quantity' => 4,
-        //     'name' => "Majohn"
-        // ];
-        $new_item[] = $item_list;
-        // foreach($items as $key){
-        //     $item_list[] = $key;
-        // }
         // $item_list[] = [
         //     'id' => "111",
         //     'price' => 20000,
@@ -110,7 +96,7 @@ class PaymentController extends Controller
         );
 
         // // Optional
-        $item_details = $new_item;
+        $item_details = $item_list;
         // // Optional
         $order = Order::find($paymentFind->order_id);
         $customer = Customer::find($order->user_id);
