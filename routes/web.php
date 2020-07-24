@@ -14,7 +14,7 @@
 $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->get('/', function () use ($router) {
-        return $router->app->version();
+        return "Selamat datang di wahyu lumen rest api test";
     });
 
     // Customer
@@ -41,5 +41,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     // end order
 
     // payment
+    $router->post('payment', 'PaymentController@create');
+    $router->post('paymentmidtrans/push', 'PaymentController@getSnapToken');
 });
 
