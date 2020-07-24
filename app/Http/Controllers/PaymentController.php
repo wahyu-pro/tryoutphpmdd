@@ -73,8 +73,8 @@ class PaymentController extends Controller
         // // Enable 3D-Secure
         // Config::$is3ds = true;
 
-        // $items = OrderItem::where('order_id', 2)->get();
-        return "ok";
+        $items = OrderItem::where('order_id', 2)->get();
+        return $items;
         // Required
         // $item_list[] = [
         //     'id' => "111",
