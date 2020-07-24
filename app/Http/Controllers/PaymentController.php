@@ -82,7 +82,7 @@ class PaymentController extends Controller
         // return $items;
         // Required
         foreach($items as $key =>$value){
-            $item_list[][$key]= $value;
+            $item_list[][$key][]= $value;
         }
         // $item_list[] = [
         //     'id' => "111",
