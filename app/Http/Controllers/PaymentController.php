@@ -97,11 +97,12 @@ class PaymentController extends Controller
         $item_details = $item_list;
         // // Optional
         $order = Order::find($paymentFind->order_id);
-        $customer = Customer::find($order->user_id);
-        if (!$customer) {
-            return "customer not found";
-        }
-        $customer_details = $customer;
+        return $order; die;
+        // $customer = Customer::find($order->user_id);
+        // if (!$customer) {
+        //     return "customer not found";
+        // }
+        // $customer_details = $customer;
         // // $customer_details = array(
         // //     'first_name'    => "Andri",
         // //     'last_name'     => "Litani",
@@ -116,7 +117,7 @@ class PaymentController extends Controller
         $transaction = array(
             // 'enabled_payments' => $enable_payments,
             'transaction_details' => $transaction_details,
-            'customer_details' => $customer_details,
+            // 'customer_details' => $customer_details,
             'item_details' => $item_details,
         );
         // return $transaction;
