@@ -75,7 +75,7 @@ class PaymentController extends Controller
         // Config::$is3ds = true;
 
         $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
-        return $items;
+        return $paymentFind->order_id;
         // return $items;
         // Required
         // $item_list[] = $items;
