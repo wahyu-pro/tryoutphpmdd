@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Order;
 use App\OrderItem;
 use Illuminate\Http\Request;
@@ -21,9 +22,9 @@ class OrderController extends Controller
     public function index()
     {
         // $customer = Order::all();
-        $order = Order::with(array('customer' => function($query){
+        $order = Order::with(array('customer' => function ($query) {
             $query->select();
-        }))->with(array('order_item' => function($query){
+        }))->with(array('order_item' => function ($query) {
             $query->select();
         }))->get();
         Log::info('OrderControllerMethodIndex');
@@ -36,27 +37,42 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-        $order = new Order();
-        $order->user_id = $request->input('data.attributes.user_id');
-        $order->status = "pending";
-        $order->save();
-        $order_id = $order->id;
+        // $order = new Order();
+        // $order->user_id = $request->input('data.attributes.user_id');
+        // $order->status = "pending";
+        // $order->save();
+        // $order_id = $order->id;
 
-        $request_detail = $request->input('data.attributes.order_detail');
-        for($i = 0; $i <= count($request_detail); $i++){
-            $order_item = new OrderItem();
-            $order_item->order_id = $order_id;
-            $order_item->product_id = $request->input('data.attributes.order_detail.'.settype($i, 'string').'.product_id');
-            $order_item->quantity = $request->input('data.attributes.order_detail.'.settype($i, 'string').'.quantity');
-            $order_item->save();
+        // $request_detail = $request->input('data.attributes.order_detail');
+        // for($i = 0; $i <= count($request_detail); $i++){
+        //     $order_item = new OrderItem();
+        //     $order_item->order_id = $order_id;
+        //     $order_item->product_id = $request->input('data.attributes.order_detail.'.settype($i, 'string').'.product_id');
+        //     $order_item->quantity = $request->input('data.attributes.order_detail.'.settype($i, 'string').'.quantity');
+        //     $order_item->save();
+        // }
+
+        $request_data = $request->all();
+        $order = new Order();
+        $order->user_id = $request_data['data']['attributes']['user_id'];
+        $order->order_status = 'create';
+        $order->save();
+        $data_product = $request_data['data']['attributes']['order_detail'];
+        for ($i = 0; $i < count($data_product); $i++) {
+            $product = new OrderItem();
+            $product->order_id = $order->id;
+            $product->product_id = $data_product[$i]['product_id'];
+            $product->quantity = $data_product[$i]['quantity'];
+            $product->save();
         }
+        // return $request;
         Log::info('OrderControllerMethodCreate');
         return response()->json(['message' => "Add Order success"], 201);
     }
 
     public function findByid($id)
     {
-        $result = Order::where('id', $id)->with(array('order_item' => function($query){
+        $result = Order::where('id', $id)->with(array('order_item' => function ($query) {
             $query->select();
         }))->get();
 
