@@ -47,22 +47,22 @@ class PaymentController extends Controller
 
     public function create(Request $request)
     {
-        $payment = new Payment();
-        $payment->payment_type = $request->input('data.attributes.payment_type');
-        $payment->gross_amount = $request->input('data.attributes.gross_amount');
-        // $payment->bank = $request->input('data.attributes.bank');
-        $payment->transaction_id = 1243556;
-        $payment->transaction_time = time();
-        $payment->transaction_status = "Pending";
-        $payment->order_id = $request->input('data.attributes.order_id');
-        $payment->save();
-        $id_payment = $payment->id;
+        // $payment = new Payment();
+        // $payment->payment_type = $request->input('data.attributes.payment_type');
+        // $payment->gross_amount = $request->input('data.attributes.gross_amount');
+        // // $payment->bank = $request->input('data.attributes.bank');
+        // $payment->transaction_id = 1243556;
+        // $payment->transaction_time = time();
+        // $payment->transaction_status = "Pending";
+        // $payment->order_id = $request->input('data.attributes.order_id');
+        // $payment->save();
+        // $id_payment = $payment->id;
 
         // Log::info('PaymentControllerMethodCreate');
         // return response()->json(['message' => "Add payment success"], 201);
 
 
-        $paymentFind = Payment::find($id_payment);
+        $paymentFind = Payment::find(6);
         $item_list = array();
         $amount = 0;
         Config::$serverKey = 'SB-Mid-server-XNmbljytrWjbZS9Civ_JLQIh';
