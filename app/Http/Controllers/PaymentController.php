@@ -85,12 +85,12 @@ class PaymentController extends Controller
         //     $item_list[$key]= $value;
         // }
         // return $item_list; die;
-        $item_list[] = [
-            'id' => "111",
-            'price' => 20000,
-            'quantity' => 1,
-            'name' => "Wahyu"
-        ];
+        // $item_list[] = [
+        //     'id' => "111",
+        //     'price' => 20000,
+        //     'quantity' => 1,
+        //     'name' => "Wahyu"
+        // ];
         $transaction_details = array(
             'order_id' => $paymentFind->order_id,
             'gross_amount' => 0, // no decimal allowed for creditcard
