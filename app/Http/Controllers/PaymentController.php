@@ -93,7 +93,7 @@ class PaymentController extends Controller
         // $item_details = $item_list;
         // // Optional
         $customer = Order::where('order_id', 1)->get();
-        return $customer;
+        return $customer->user_id;
         // $customer_details = array(
         //     'first_name'    => "Andri",
         //     'last_name'     => "Litani",
