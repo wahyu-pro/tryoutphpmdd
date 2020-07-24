@@ -58,12 +58,11 @@ class PaymentController extends Controller
         $payment->save();
         $id_payment = $payment->id;
 
-        return $id_payment;
         // Log::info('PaymentControllerMethodCreate');
         // return response()->json(['message' => "Add payment success"], 201);
 
 
-        // $paymentFind = Payment::find(6);
+        $paymentFind = Payment::find($id_payment);
         // $item_list = array();
         // $amount = 0;
         // Config::$serverKey = 'SB-Mid-server-XNmbljytrWjbZS9Civ_JLQIh';
@@ -75,28 +74,34 @@ class PaymentController extends Controller
         // Enable 3D-Secure
         // Config::$is3ds = true;
 
-        // $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
+        $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
+        if(!$items){
+            return "order not found";
+        }
         // return $paymentFind->order_id;
         // return $items;
         // Required
-        // $item_list[] = $items;
+        $item_list[] = $items;
         // $item_list[] = [
         //     'id' => "111",
         //     'price' => 20000,
         //     'quantity' => 1,
         //     'name' => "Majohn"
         // ];
-        // $transaction_details = array(
-        //     'order_id' => $paymentFind->order_id,
-        //     'gross_amount' => 0, // no decimal allowed for creditcard
-        // );
+        $transaction_details = array(
+            'order_id' => $paymentFind->order_id,
+            'gross_amount' => 0, // no decimal allowed for creditcard
+        );
 
         // // Optional
-        // $item_details = $item_list;
+        $item_details = $item_list;
         // // Optional
-        // $order = Order::find($paymentFind->order_id);
-        // $customer = Customer::find($order->user_id);
-        // $customer_details = $customer;
+        $order = Order::find($paymentFind->order_id);
+        $customer = Customer::find($order->user_id);
+        if (!$customer) {
+            return "customer not found";
+        }
+        $customer_details = $customer;
         // // $customer_details = array(
         // //     'first_name'    => "Andri",
         // //     'last_name'     => "Litani",
@@ -108,22 +113,22 @@ class PaymentController extends Controller
         // $enable_payments = array();
 
         // // Fill transaction details
-        // $transaction = array(
-        //     // 'enabled_payments' => $enable_payments,
-        //     'transaction_details' => $transaction_details,
-        //     'customer_details' => $customer_details,
-        //     'item_details' => $item_details,
-        // );
-        // // return $transaction;
-        // try {
-        //     $snapToken = Snap::getSnapToken($transaction);
-        //     // return response()->json($snapToken);
-        //     return response()->json($snapToken);
-        //     // return ['code' => 1 , 'message' => 'success' , 'result' => $snapToken];
-        // } catch (\Exception $e) {
-        //     dd($e);
-        //     return ['code' => 0, 'message' => 'failed'];
-        // }
+        $transaction = array(
+            // 'enabled_payments' => $enable_payments,
+            'transaction_details' => $transaction_details,
+            'customer_details' => $customer_details,
+            'item_details' => $item_details,
+        );
+        // return $transaction;
+        try {
+            $snapToken = Snap::getSnapToken($transaction);
+            // return response()->json($snapToken);
+            return response()->json($snapToken);
+            // return ['code' => 1 , 'message' => 'success' , 'result' => $snapToken];
+        } catch (\Exception $e) {
+            dd($e);
+            return ['code' => 0, 'message' => 'failed'];
+        }
     }
 
     // public function get_items($id)
