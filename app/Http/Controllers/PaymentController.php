@@ -94,7 +94,7 @@ class PaymentController extends Controller
         //     'quantity' => 4,
         //     'name' => "Majohn"
         // ];
-        $item_lagi[] = $item_list;
+        $new_item[] = $item_list;
         // foreach($items as $key){
         //     $item_list[] = $key;
         // }
@@ -110,7 +110,7 @@ class PaymentController extends Controller
         );
 
         // // Optional
-        $item_details = $item_list;
+        $item_details = $new_item;
         // // Optional
         $order = Order::find($paymentFind->order_id);
         $customer = Customer::find($order->user_id);
