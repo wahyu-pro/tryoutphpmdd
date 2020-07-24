@@ -1,16 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Midtrans;
-
+use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller;
 
-/**
- * Request params filters.
- *
- * It truncate fields that have length limit, remove not allowed characters from other fields
- *
- * This feature is optional, you can control it with Config::$isSanitized (default: false)
- */
 class Sanitizer extends Controller
 {
     private $filters;
@@ -22,14 +15,15 @@ class Sanitizer extends Controller
 
     /**
      * Validates and modify data
-     *
+     * 
      * @param mixed[] $json
      */
     public static function jsonRequest(&$json)
     {
         $keys = array('item_details', 'customer_details');
         foreach ($keys as $key) {
-            if (!isset($json[$key])) continue;
+            if (!array_key_exists($key, $json)) continue;
+
             $camel = static::upperCamelize($key);
             $function = "field$camel";
             static::$function($json[$key]);
@@ -56,7 +50,7 @@ class Sanitizer extends Controller
         $field['first_name'] = $first_name
             ->maxLength(20)
             ->apply($field['first_name']);
-        if (isset($field['last_name'])) {
+        if (array_key_exists('last_name', $field)) {
             $last_name = new self;
             $field['last_name'] = $last_name
                 ->maxLength(20)
@@ -72,14 +66,14 @@ class Sanitizer extends Controller
         if (!empty($field['billing_address']) || !empty($field['shipping_address'])) {
             $keys = array('billing_address', 'shipping_address');
             foreach ($keys as $key) {
-                if (!isset($field[$key])) continue;
+                if (!array_key_exists($key, $field)) continue;
 
                 $camel = static::upperCamelize($key);
                 $function = "field$camel";
                 static::$function($field[$key]);
             }
         }
-
+        
     }
 
     private static function fieldBillingAddress(&$field)
@@ -93,7 +87,7 @@ class Sanitizer extends Controller
         );
 
         foreach ($fields as $key => $value) {
-            if (isset($field[$key])) {
+            if (array_key_exists($key, $field)) {
                 $self = new self;
                 $field[$key] = $self
                     ->maxLength($value)
@@ -101,14 +95,14 @@ class Sanitizer extends Controller
             }
         }
 
-        if (isset($field['postal_code'])) {
+        if (array_key_exists('postal_code', $field)) {
             $postal_code = new self;
             $field['postal_code'] = $postal_code
                 ->whitelist('A-Za-z0-9\\- ')
                 ->maxLength(10)
                 ->apply($field['postal_code']);
         }
-        if (isset($field['phone'])) {
+        if (array_key_exists('phone', $field)) {
             static::fieldPhone($field['phone']);
         }
     }

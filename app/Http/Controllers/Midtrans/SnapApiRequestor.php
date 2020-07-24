@@ -1,31 +1,19 @@
 <?php
 
 namespace App\Http\Controllers\Midtrans;
-
+use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller;
-
-/**
- * Send request to Snap API
- * Better don't use this class directly, use Snap
- */
 
 class SnapApiRequestor extends Controller
 {
-    /**
-     * Send GET request
-     *
-     * @param string  $url
-     * @param string  $server_key
-     * @param mixed[] $data_hash
-     */
-    public static function get($url, $server_key, $data_hash)
+   public static function get($url, $server_key, $data_hash)
     {
         return self::remoteCall($url, $server_key, $data_hash, false);
     }
 
     /**
      * Send POST request
-     *
+     * 
      * @param string  $url
      * @param string  $server_key
      * @param mixed[] $data_hash
@@ -37,7 +25,7 @@ class SnapApiRequestor extends Controller
 
     /**
      * Actually send request to API server
-     *
+     * 
      * @param string  $url
      * @param string  $server_key
      * @param mixed[] $data_hash
@@ -124,5 +112,5 @@ class SnapApiRequestor extends Controller
         );
 
         return VT_Tests::$stubHttpResponse;
-    }
+    }  
 }

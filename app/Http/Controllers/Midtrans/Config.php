@@ -1,62 +1,41 @@
 <?php
 
 namespace App\Http\Controllers\Midtrans;
-
+use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller;
 
-/**
- * Midtrans Configuration
- */
 class Config extends Controller
 {
-
-    /**
-     * Your merchant's server key
-     *
-     * @static
-     */
     public static $serverKey;
     /**
      * Your merchant's client key
-     *
+     * 
      * @static
      */
     public static $clientKey;
     /**
      * True for production
      * false for sandbox mode
-     *
+     * 
      * @static
      */
     public static $isProduction = false;
     /**
      * Set it true to enable 3D Secure by default
-     *
+     * 
      * @static
      */
     public static $is3ds = false;
     /**
-     *  Set Append URL notification
-     *
-     * @static
-     */
-    public static $appendNotifUrl;
-    /**
-     *  Set Override URL notification
-     *
-     * @static
-     */
-    public static $overrideNotifUrl;
-    /**
      * Enable request params sanitizer (validate and modify charge request params).
      * See Midtrans_Sanitizer for more details
-     *
+     * 
      * @static
      */
     public static $isSanitized = false;
     /**
      * Default options for every request
-     *
+     * 
      * @static
      */
     public static $curlOptions = array();
@@ -68,7 +47,7 @@ class Config extends Controller
 
     /**
      * Get baseUrl
-     *
+     * 
      * @return string Midtrans API URL, depends on $isProduction
      */
     public static function getBaseUrl()
@@ -79,7 +58,7 @@ class Config extends Controller
 
     /**
      * Get snapBaseUrl
-     *
+     * 
      * @return string Snap API URL, depends on $isProduction
      */
     public static function getSnapBaseUrl()

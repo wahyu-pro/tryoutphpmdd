@@ -1,26 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Midtrans;
-
+use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller;
 
-/**
- * Provide charge and capture functions for Core API
- */
 class CoreApi extends Controller
 {
-    /**
-     * Create transaction.
-     *
-     * @param mixed[] $params Transaction options
-     */
     public static function charge($params)
     {
         $payloads = array(
             'payment_type' => 'credit_card'
         );
 
-        if (isset($params['item_details'])) {
+        if (array_key_exists('item_details', $params)) {
             $gross_amount = 0;
             foreach ($params['item_details'] as $item) {
                 $gross_amount += $item['quantity'] * $item['price'];
@@ -33,12 +25,6 @@ class CoreApi extends Controller
         if (Config::$isSanitized) {
             Sanitizer::jsonRequest($payloads);
         }
-
-        if (Config::$appendNotifUrl)
-            Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Append-Notification: ' . Config::$appendNotifUrl;
-
-        if (Config::$overrideNotifUrl)
-            Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Override-Notification: ' . Config::$overrideNotifUrl;
 
         $result = ApiRequestor::post(
             Config::getBaseUrl() . '/charge',

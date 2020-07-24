@@ -1,24 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Midtrans;
-
+use Illuminate\Http\Request
 use App\Http\Controllers\Controller;
-
-/**
- * Send request to Midtrans API
- * Better don't use this class directly, use CoreApi, Transaction
- */
 
 class ApiRequestor extends Controller
 {
-
-    /**
-     * Send GET request
-     *
-     * @param string  $url
-     * @param string  $server_key
-     * @param mixed[] $data_hash
-     */
     public static function get($url, $server_key, $data_hash)
     {
         return self::remoteCall($url, $server_key, $data_hash, false);
