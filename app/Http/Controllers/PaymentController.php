@@ -81,16 +81,16 @@ class PaymentController extends Controller
         // return $paymentFind->order_id;
         // return $items;
         // Required
-        // foreach($items as $key =>$value){
-        //     $item_list[$key]= $value;
-        // }
+        foreach($items as $key =>$value){
+            $item_list[$key]= $value;
+        }
         // return $item_list; die;
-        $item_list[] = [
-            'id' => "111",
-            'price' => 20000,
-            'quantity' => 1,
-            'name' => "Wahyu"
-        ];
+        // $item_list[] = [
+        //     'id' => "111",
+        //     'price' => 20000,
+        //     'quantity' => 1,
+        //     'name' => "Wahyu"
+        // ];
         $transaction_details = array(
             'order_id' => $paymentFind->order_id,
             'gross_amount' => 0, // no decimal allowed for creditcard
@@ -124,6 +124,9 @@ class PaymentController extends Controller
         // return $transaction;
         try {
             $snapToken = Snap::getSnapToken($transaction);
+            if (!$snapToken) {
+                return "not resolve";
+            }
             // return response()->json($snapToken);
             return response()->json($snapToken);
             // return ['code' => 1 , 'message' => 'success' , 'result' => $snapToken];
