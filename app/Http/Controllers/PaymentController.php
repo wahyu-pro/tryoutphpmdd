@@ -63,16 +63,16 @@ class PaymentController extends Controller
 
 
         $paymentFind = Payment::find($id_payment);
-        // $item_list = array();
-        // $amount = 0;
-        // Config::$serverKey = 'SB-Mid-server-XNmbljytrWjbZS9Civ_JLQIh';
-        // if (!isset(Config::$serverKey)) {
-        //     return "Please set your payment server key";
-        // }
-        // Config::$isSanitized = true;
+        $item_list = array();
+        $amount = 0;
+        Config::$serverKey = 'SB-Mid-server-XNmbljytrWjbZS9Civ_JLQIh';
+        if (!isset(Config::$serverKey)) {
+            return "Please set your payment server key";
+        }
+        Config::$isSanitized = true;
 
         // Enable 3D-Secure
-        // Config::$is3ds = true;
+        Config::$is3ds = true;
 
         $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
         if(!$items){
