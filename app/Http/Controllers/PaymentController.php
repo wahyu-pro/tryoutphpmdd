@@ -84,7 +84,7 @@ class PaymentController extends Controller
         foreach($items as $key =>$value){
             $item_list[$key]= $value;
         }
-        return $item_list; die;
+        // return $item_list; die;
         // $item_list[] = [
         //     'id' => "111",
         //     'price' => 20000,
