@@ -47,22 +47,23 @@ class PaymentController extends Controller
 
     public function create(Request $request)
     {
-        // $payment = new Payment();
-        // $payment->payment_type = $request->input('data.attributes.payment_type');
-        // $payment->gross_amount = $request->input('data.attributes.gross_amount');
-        // // $payment->bank = $request->input('data.attributes.bank');
-        // $payment->transaction_id = 1243556;
-        // $payment->transaction_time = time();
-        // $payment->transaction_status = "Pending";
-        // $payment->order_id = $request->input('data.attributes.order_id');
-        // $payment->save();
-        // $id_payment = $payment->id;
+        $payment = new Payment();
+        $payment->payment_type = $request->input('data.attributes.payment_type');
+        $payment->gross_amount = $request->input('data.attributes.gross_amount');
+        // $payment->bank = $request->input('data.attributes.bank');
+        $payment->transaction_id = 1243556;
+        $payment->transaction_time = time();
+        $payment->transaction_status = "Pending";
+        $payment->order_id = $request->input('data.attributes.order_id');
+        $payment->save();
+        $id_payment = $payment->id;
 
+        return $id_payment;
         // Log::info('PaymentControllerMethodCreate');
         // return response()->json(['message' => "Add payment success"], 201);
 
 
-        $paymentFind = Payment::find(6);
+        // $paymentFind = Payment::find(6);
         // $item_list = array();
         // $amount = 0;
         // Config::$serverKey = 'SB-Mid-server-XNmbljytrWjbZS9Civ_JLQIh';
@@ -74,8 +75,8 @@ class PaymentController extends Controller
         // Enable 3D-Secure
         // Config::$is3ds = true;
 
-        $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
-        return $paymentFind->order_id;
+        // $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
+        // return $paymentFind->order_id;
         // return $items;
         // Required
         // $item_list[] = $items;
