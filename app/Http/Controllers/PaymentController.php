@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -70,12 +71,13 @@ class PaymentController extends Controller
         // }
         // Config::$isSanitized = true;
 
-        // // Enable 3D-Secure
+        // Enable 3D-Secure
         // Config::$is3ds = true;
 
-        $items = OrderItem::where('order_id', 2)->get();
-        return $items;
+        // $items = OrderItem::where('order_id', $paymentFind->order_id)->get();
+        // return $items;
         // Required
+        // $item_list[] = $items;
         // $item_list[] = [
         //     'id' => "111",
         //     'price' => 20000,
@@ -90,6 +92,8 @@ class PaymentController extends Controller
         // // Optional
         // $item_details = $item_list;
         // // Optional
+        $customer = Order::where('order_id', 1)->get();
+        return $customer;
         // $customer_details = array(
         //     'first_name'    => "Andri",
         //     'last_name'     => "Litani",
