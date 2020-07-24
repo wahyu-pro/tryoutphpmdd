@@ -81,7 +81,9 @@ class PaymentController extends Controller
         // return $paymentFind->order_id;
         // return $items;
         // Required
-        $item_list[] = $items;
+        foreach($items as $key){
+            $item_list[] = $key;
+        }
         // $item_list[] = [
         //     'id' => "111",
         //     'price' => 20000,
@@ -112,7 +114,6 @@ class PaymentController extends Controller
         // // Optional, remove this to display all available payment methods
         // $enable_payments = array();
 
-        // // Fill transaction details
         $transaction = array(
             // 'enabled_payments' => $enable_payments,
             'transaction_details' => $transaction_details,
